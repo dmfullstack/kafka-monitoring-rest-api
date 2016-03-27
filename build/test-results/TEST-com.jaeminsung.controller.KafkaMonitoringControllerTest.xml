@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.jaeminsung.controller.KafkaMonitoringControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-03-27T22:02:05" hostname="Jaemins-MBP.home" time="0.54">
+  <properties/>
+  <testcase name="testKafkaMonitoringController" classname="com.jaeminsung.controller.KafkaMonitoringControllerTest" time="0.54"/>
+  <system-out><![CDATA[[2016-03-27 18:02:06.056] boot - 1776  INFO [Test worker] --- StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping: Mapped "{[/offsets],methods=[GET]}" onto public java.util.Map<java.lang.Integer, com.jaeminsung.domain.OffsetInfo> com.jaeminsung.controller.KafkaMonitoringController.offsets(java.lang.String,java.lang.String,java.lang.String)
+[2016-03-27 18:02:06.099] boot - 1776  INFO [Test worker] --- RequestMappingHandlerAdapter: Looking for @ControllerAdvice: org.springframework.test.web.servlet.setup.StubWebApplicationContext@7467db54
+[2016-03-27 18:02:06.161] boot - 1776  INFO [Test worker] --- MockServletContext: Initializing Spring FrameworkServlet ''
+[2016-03-27 18:02:06.161] boot - 1776  INFO [Test worker] --- TestDispatcherServlet: FrameworkServlet '': initialization started
+[2016-03-27 18:02:06.164] boot - 1776  INFO [Test worker] --- TestDispatcherServlet: FrameworkServlet '': initialization completed in 2 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

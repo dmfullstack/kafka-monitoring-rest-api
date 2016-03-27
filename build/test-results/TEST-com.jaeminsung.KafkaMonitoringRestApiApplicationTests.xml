@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.jaeminsung.KafkaMonitoringRestApiApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-03-27T22:02:05" hostname="Jaemins-MBP.home" time="0.002">
+  <properties/>
+  <testcase name="contextLoads" classname="com.jaeminsung.KafkaMonitoringRestApiApplicationTests" time="0.002"/>
+  <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.3.3.RELEASE)
+
+[2016-03-27 18:02:04.096] boot - 1776  INFO [Test worker] --- KafkaMonitoringRestApiApplicationTests: Starting KafkaMonitoringRestApiApplicationTests on Jaemins-MBP.home with PID 1776 (/Users/jsung/Development/kafka-monitoring-rest-api/build/classes/test started by jsung in /Users/jsung/Development/kafka-monitoring-rest-api)
+[2016-03-27 18:02:04.099] boot - 1776  INFO [Test worker] --- KafkaMonitoringRestApiApplicationTests: No active profile set, falling back to default profiles: default
+[2016-03-27 18:02:04.244] boot - 1776  INFO [Test worker] --- AnnotationConfigApplicationContext: Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@54f86cf2: startup date [Sun Mar 27 18:02:04 EDT 2016]; root of context hierarchy
+[2016-03-27 18:02:05.693] boot - 1776  INFO [Test worker] --- KafkaMonitoringRestApiApplicationTests: Started KafkaMonitoringRestApiApplicationTests in 1.946 seconds (JVM running for 2.949)
+]]></system-out>
+  <system-err><![CDATA[log4j:WARN No appenders could be found for logger (org.springframework.test.context.junit4.SpringJUnit4ClassRunner).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+]]></system-err>
+</testsuite>
