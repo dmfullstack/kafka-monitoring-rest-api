@@ -1,21 +1,26 @@
 package com.jaeminsung.kafka;
 
+import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
+import static org.powermock.api.easymock.PowerMock.mockStatic;
+import static org.powermock.api.easymock.PowerMock.replay;
+import static org.powermock.api.easymock.PowerMock.verify;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.common.errors.InvalidTopicException;
 import org.apache.kafka.common.errors.TimeoutException;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.jaeminsung.domain.OffsetInfo;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({KafkaOffsetTracker.class, KafkaBrokerTracker.class})
 public class KafkaOffsetTrackerTest {
 	
 	private final static String BROKERS = "localhost:9022,localhost:9093,localhost:9094";
@@ -25,26 +30,20 @@ public class KafkaOffsetTrackerTest {
 	private final static String GROUP = "test_group";
 	private final static String INVALID_GROUP = "wrong_group";
 	
-	private static KafkaOffsetTracker tracker;
-	
-	@BeforeClass
-	public static void setUp() {
+	@Test
+	public void testKafkaOffsetTracker() {
 		OffsetInfo offsetInfoPart0 = new OffsetInfo(2L, 2L);
 		OffsetInfo offsetInfoPart1 = new OffsetInfo(100L, 90L);
 		Map<Integer, OffsetInfo> offsetInfoMap = new HashMap<Integer, OffsetInfo>();
 		offsetInfoMap.put(Integer.valueOf(0), offsetInfoPart0);
 		offsetInfoMap.put(Integer.valueOf(1), offsetInfoPart1);
 		
-		tracker = mock(KafkaOffsetTracker.class);
-		doReturn(offsetInfoMap).when(tracker).getOffsetInfoMap(BROKERS, TOPIC, GROUP);
-		doThrow(new TimeoutException()).when(tracker).getOffsetInfoMap(INVALID_BROKERS, TOPIC, GROUP);
-		doThrow(new InvalidTopicException()).when(tracker).getOffsetInfoMap(BROKERS, INVALID_TOPIC, GROUP);
-		doThrow(new RuntimeException()).when(tracker).getOffsetInfoMap(BROKERS, TOPIC, INVALID_GROUP);
-	}
-
-	@Test
-	public void testKafkaOffsetTracker() {
-		Map<Integer, OffsetInfo> mockedMap = tracker.getOffsetInfoMap(BROKERS, TOPIC, GROUP);
+		mockStatic(KafkaOffsetTracker.class);
+        expect(KafkaOffsetTracker.getOffsetInfoMap(BROKERS, TOPIC, GROUP)).andReturn(offsetInfoMap);
+        replay(KafkaOffsetTracker.class);
+		
+		Map<Integer, OffsetInfo> mockedMap = KafkaOffsetTracker.getOffsetInfoMap(BROKERS, TOPIC, GROUP);
+		verify(KafkaOffsetTracker.class);
 		assertNotNull(mockedMap);
 		
 		OffsetInfo part0 = mockedMap.get(Integer.valueOf(0));
@@ -58,16 +57,31 @@ public class KafkaOffsetTrackerTest {
 	
 	@Test(expected=TimeoutException.class)
 	public void testKafkaOffsetTrackerWithInvalidBrokers() {
-		tracker.getOffsetInfoMap(INVALID_BROKERS, TOPIC, GROUP);
+		mockStatic(KafkaOffsetTracker.class);
+		expect(KafkaOffsetTracker.getOffsetInfoMap(INVALID_BROKERS, TOPIC, GROUP)).andThrow(new TimeoutException());
+		replay(KafkaOffsetTracker.class);
+		
+		KafkaOffsetTracker.getOffsetInfoMap(INVALID_BROKERS, TOPIC, GROUP);
+		verify(KafkaOffsetTracker.class);
 	}
 	
 	@Test(expected=InvalidTopicException.class)
 	public void testKafkaOffsetTrackerWithInvalidTopic() {
-		tracker.getOffsetInfoMap(BROKERS, INVALID_TOPIC, GROUP);
+		mockStatic(KafkaOffsetTracker.class);
+		expect(KafkaOffsetTracker.getOffsetInfoMap(BROKERS, INVALID_TOPIC, GROUP)).andThrow(new InvalidTopicException());
+		replay(KafkaOffsetTracker.class);
+		
+		KafkaOffsetTracker.getOffsetInfoMap(BROKERS, INVALID_TOPIC, GROUP);
+		verify(KafkaOffsetTracker.class);
 	}
 	
 	@Test(expected=RuntimeException.class)
 	public void testKafkaOffsetTrackerWithInvalidGroup() {
-		tracker.getOffsetInfoMap(BROKERS, TOPIC, INVALID_GROUP);
+		mockStatic(KafkaOffsetTracker.class);
+		expect(KafkaOffsetTracker.getOffsetInfoMap(BROKERS, TOPIC, INVALID_GROUP)).andThrow(new RuntimeException());
+		replay(KafkaOffsetTracker.class);
+		
+		KafkaOffsetTracker.getOffsetInfoMap(BROKERS, TOPIC, INVALID_GROUP);
+		verify(KafkaOffsetTracker.class);
 	}
 }

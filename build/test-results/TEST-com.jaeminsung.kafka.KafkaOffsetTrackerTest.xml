@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.jaeminsung.kafka.KafkaOffsetTrackerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2016-03-27T22:02:06" hostname="Jaemins-MBP.home" time="0.002">
+<testsuite name="com.jaeminsung.kafka.KafkaOffsetTrackerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2016-05-01T05:58:30" hostname="Jaemins-MBP.fios-router.home" time="0.182">
   <properties/>
-  <testcase name="testKafkaOffsetTracker" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.0"/>
-  <testcase name="testKafkaOffsetTrackerWithInvalidBrokers" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.001"/>
-  <testcase name="testKafkaOffsetTrackerWithInvalidGroup" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.001"/>
-  <testcase name="testKafkaOffsetTrackerWithInvalidTopic" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.0"/>
+  <testcase name="testKafkaOffsetTracker" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.172"/>
+  <testcase name="testKafkaOffsetTrackerWithInvalidBrokers" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.003"/>
+  <testcase name="testKafkaOffsetTrackerWithInvalidTopic" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.001"/>
+  <testcase name="testKafkaOffsetTrackerWithInvalidGroup" classname="com.jaeminsung.kafka.KafkaOffsetTrackerTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

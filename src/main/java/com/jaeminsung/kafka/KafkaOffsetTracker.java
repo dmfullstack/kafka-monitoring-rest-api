@@ -37,35 +37,11 @@ import kafka.javaapi.consumer.SimpleConsumer;
 @Component
 public class KafkaOffsetTracker {
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(KafkaOffsetTracker.class);
-	private final int REQUEST_TIMEOUT = 6000;
-	private final int SESSION_TIMEOUT = 5000;
-	private String topic, group;
-	private Properties props;
-	
-	/**
-	 * initialize() prepares necessary field variables and Kafka consumer properties
-	 * 
-	 * @param brokers
-	 * @param topic
-	 * @param group
-	 */
-	private void initialize(String brokers, String topic, String group) {
-		Validate.notEmpty(brokers);
-		Validate.notEmpty(topic);
-		Validate.notEmpty(group);
-		
-		this.topic = topic;
-		this.group = group;
-		
-		props = new Properties();
-		props.put("bootstrap.servers", brokers);
-		props.put("group.id", group);
-		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-		props.put("request.timeout.ms", REQUEST_TIMEOUT); //timeout for client waiting for response
-		props.put("session.timeout.ms", SESSION_TIMEOUT); //timeout used to detect Kafka failures
-	}
+	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaOffsetTracker.class);
+	private static final int REQUEST_TIMEOUT = 6000;
+	private static final int SESSION_TIMEOUT = 5000;
+	private static String topic, group;
+	private static Properties props;
 	
 	/**
 	 * getOffsetInfoMap() fetches offsets (latest offset and committed offset) for the given topic
@@ -76,7 +52,7 @@ public class KafkaOffsetTracker {
 	 * @param group
 	 * @return Map of Partition and Offsets
 	 */
-	public Map<Integer, OffsetInfo> getOffsetInfoMap(String brokers, String topic, String group) {
+	public static Map<Integer, OffsetInfo> getOffsetInfoMap(String brokers, String topic, String group) {
 		initialize(brokers, topic, group);
 		Map<Integer, OffsetInfo> offsetInfoMap = new HashMap<Integer, OffsetInfo>();
 		
@@ -108,13 +84,37 @@ public class KafkaOffsetTracker {
 	}
 	
 	/**
+	 * initialize() prepares necessary field variables and Kafka consumer properties
+	 * 
+	 * @param brokers
+	 * @param topic
+	 * @param group
+	 */
+	private static void initialize(String brokers, String inputTopic, String consumerGroup) {
+		Validate.notEmpty(brokers);
+		Validate.notEmpty(inputTopic);
+		Validate.notEmpty(consumerGroup);
+		
+		topic = inputTopic;
+		group = consumerGroup;
+		
+		props = new Properties();
+		props.put("bootstrap.servers", brokers);
+		props.put("group.id", group);
+		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+		props.put("request.timeout.ms", REQUEST_TIMEOUT); //timeout for client waiting for response
+		props.put("session.timeout.ms", SESSION_TIMEOUT); //timeout used to detect Kafka failures
+	}
+	
+	/**
 	 * getOffsetInfo() retrieves offsets and calculates lag for the given partition
 	 * 
 	 * @param consumer
 	 * @param pInfo
 	 * @return OffsetInfo containing latest offset, committed offset, and lag
 	 */
-	private OffsetInfo getOffsetInfo(KafkaConsumer<String, String> consumer, PartitionInfo pInfo) {
+	private static OffsetInfo getOffsetInfo(KafkaConsumer<String, String> consumer, PartitionInfo pInfo) {
 		OffsetAndMetadata offsetData = consumer.committed(new TopicPartition(topic, pInfo.partition()));
 
 		if (offsetData == null) {
@@ -137,7 +137,7 @@ public class KafkaOffsetTracker {
 	 * @param partitionInfo
 	 * @return latest offset
 	 */
-	private long getLatestOffset(PartitionInfo partitionInfo) {
+	private static long getLatestOffset(PartitionInfo partitionInfo) {
 		final int SOCKET_TIMEOUT = 100000;
 		final int BUFFER_SIZE = 64 * 1024;
 		final String CLIENT = "offset_lookup";
