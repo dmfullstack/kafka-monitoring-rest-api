@@ -13,7 +13,7 @@ gradle bootRun
 
 ## Test
 
-Make a HTTP GET call to find offset info for each partition of a Kafka topic given a consumer group
+### Make a HTTP GET call to find offset info for each partition of a Kafka topic given a consumer group
 
 <b>Sample HTTP Endpoint:</b>
 
@@ -36,7 +36,7 @@ http://localhost:8080/offsets?brokers=localhost:9092&topic=test&group=testgroup
 }
 ```
 
-Make a HTTP GET call to find about whether each of provided Kafka brokers is up and running
+### Make a HTTP GET call to find about whether each of provided Kafka brokers is up and running
 
 <b>Sample HTTP Endpoint:</b>
 
